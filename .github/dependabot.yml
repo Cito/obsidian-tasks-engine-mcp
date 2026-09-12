@@ -19,9 +19,29 @@ updates:
         dependency-type: production
         update-types: [minor, patch]
     ignore:
-      # Pinned by the engine: obsidian-tasks requires exactly this version,
-      # and it moves with the submodule, not on its own.
+      # Not ours: the engine's runtime dependencies, which obsidian-tasks
+      # declares in its own package.json (chrono-node even pinned exactly).
+      # They move with the submodule, when upstream moves them — never on
+      # their own, because a green test run does not prove the engine works
+      # against a version it was never written for. Advisories in them still
+      # surface through the `audit` job in CI.
+      - dependency-name: '@floating-ui/dom'
+      - dependency-name: async-mutex
+      - dependency-name: boon-js
       - dependency-name: chrono-node
+      - dependency-name: eventemitter2
+      - dependency-name: flatpickr
+      - dependency-name: i18next
+      - dependency-name: moment
+      - dependency-name: mustache
+      - dependency-name: mustache-validator
+      - dependency-name: rrule
+      - dependency-name: safe-regex2
+
+      # TypeScript majors wait for typescript-eslint to support them, and
+      # the vendor tree is written against TypeScript 5.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: github-actions
     directory: /

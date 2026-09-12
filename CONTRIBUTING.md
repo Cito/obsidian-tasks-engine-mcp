@@ -137,6 +137,11 @@ npm run check -- /path/to/vault        # add --summary if the output leaves the 
 git add vendor/obsidian-tasks README.md && git commit
 ```
 
+If upstream's `package.json` changed its runtime dependencies, carry the
+change into ours by hand, and into the `ignore` list in
+`.github/dependabot.yml` — those dependencies are the engine's, so Dependabot
+leaves them alone and only the submodule moves them.
+
 If the bump crosses a release, `npm test` fails until the version named in
 the README matches the submodule again. That is deliberate: the README says
 what the code was tested against, and a stale claim there is worse than

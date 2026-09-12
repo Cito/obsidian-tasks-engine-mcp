@@ -50,12 +50,12 @@
     "rrule": "^2.8.1",
     "safe-regex2": "^5.1.1",
     "yaml": "^2.9.0",
-    "zod": "^4.5.4"
+    "zod": "^4.6.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^22.20.2",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.28.2",
     "eslint": "^10.10.0",
     "globals": "^17.12.0",
     "typescript": "^5.6.0",
