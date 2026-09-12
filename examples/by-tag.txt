@@ -1,0 +1,9 @@
+# Which topics is the open work sitting in?
+# Change the tag to one of your own; `group by tags` splits a task with
+# several tags into several groups.
+
+not done
+has tags
+group by tags
+sort by description
+limit 100

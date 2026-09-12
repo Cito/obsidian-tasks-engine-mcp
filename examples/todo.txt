@@ -1,0 +1,10 @@
+# Open items, hardest first — for any list of tasks, and usable on this
+# repository's own docs/TODO.md as much as on a vault of your own.
+#
+# `is not blocked` drops whatever still depends (⛔) on an unfinished task;
+# the headings of a note become the groups.
+
+not done
+is not blocked
+sort by priority
+group by heading

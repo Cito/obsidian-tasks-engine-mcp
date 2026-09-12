@@ -1,0 +1,3 @@
+[submodule "vendor/obsidian-tasks"]
+	path = vendor/obsidian-tasks
+	url = https://github.com/obsidian-tasks-group/obsidian-tasks.git

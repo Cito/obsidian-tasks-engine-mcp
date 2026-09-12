@@ -1,0 +1,53 @@
+# What CI is for here: proving that a fresh clone builds and passes.
+#
+# This project fails for newcomers in one particular way — an empty
+# `vendor/obsidian-tasks`, because the submodule was not fetched. Nobody who
+# already has it checked out will ever see that. So the checkout below is the
+# point of the job, as much as the test run is.
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22', '24']
+
+    steps:
+      - name: Check out, engine and all
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # Belt and braces: if the submodule is ever unfetched, this says so in
+      # one line instead of leaving an import error to be deciphered.
+      - name: The submodule is actually there
+        run: test -f vendor/obsidian-tasks/manifest.json
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - run: npm ci
+
+      # typecheck, lint, build, self-check, invariants, the comparison with
+      # Obsidian, and the MCP layer over both transports. No vault needed.
+      - run: npm test
+
+      # docs/ is itself a small vault — TODO.md is written in the Tasks format
+      # — so the invariants get something other than the fixtures to run on.
+      # Not the repository root: vendor/ carries deliberately malformed test
+      # data, and failing on upstream's fixtures would say nothing about us.
+      - name: The invariants, over docs/
+        run: node dist/cli.js --check --summary docs

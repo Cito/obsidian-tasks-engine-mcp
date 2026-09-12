@@ -1,0 +1,9 @@
+# Everything stuck behind something else.
+# `is blocked` follows the id / dependsOn links between tasks, which only
+# work because the tasks carry their place in the list tree.
+
+not done
+is blocked
+show tree
+group by filename
+sort by urgency

@@ -1,0 +1,13 @@
+{
+  "globalQuery": "",
+  "globalFilter": "#task",
+  "removeGlobalFilter": true,
+  "taskFormat": "tasksPluginEmoji",
+  "statusSettings": {
+    "coreStatuses": [
+      { "symbol": " ", "name": "Todo", "nextStatusSymbol": "x", "availableAsCommand": true, "type": "TODO" },
+      { "symbol": "x", "name": "Done", "nextStatusSymbol": " ", "availableAsCommand": true, "type": "DONE" }
+    ],
+    "customStatuses": []
+  }
+}

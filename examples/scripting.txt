@@ -1,0 +1,11 @@
+# Needs `--enable-js` (CLI), because JavaScript in queries is off by default,
+# exactly as in the plugin:
+#     node dist/cli.js --enable-js <vault> examples/scripting.txt
+#
+# Tasks whose description is unusually long — the kind of thing no built-in
+# filter offers, and the reason the plugin has `filter by function` at all.
+
+not done
+filter by function task.description.length > 80
+sort by function reverse task.description.length
+limit 10

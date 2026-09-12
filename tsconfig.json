@@ -1,0 +1,33 @@
+{
+    // Type checking only — the bundle is built by esbuild, which strips types
+    // without looking at them. `npm run typecheck` is therefore the only thing
+    // in this project that ever asks TypeScript whether the code is correct.
+    //
+    // The scope is deliberately `src/` and `tests/`. The vendor tree brings
+    // its own tsconfig and is checked, if at all, with `tsconfig.vendor.json`
+    // after a submodule bump — see CONTRIBUTING.md.
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "lib": ["ES2022", "DOM"],
+        "types": ["node"],
+
+        "strict": true,
+        "noEmit": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+
+        // The same alias the build applies: everything the engine imports from
+        // 'obsidian' comes from the shim. Without this the checker resolves
+        // nothing and every vendor import is an error.
+        "baseUrl": ".",
+        "paths": {
+            "obsidian": ["./src/obsidian-shim.ts"]
+        }
+    },
+    "include": ["src/**/*.ts", "tests/**/*.ts"]
+}

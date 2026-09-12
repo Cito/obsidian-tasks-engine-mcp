@@ -1,0 +1,37 @@
+node_modules/
+dist/
+*.log
+
+# Everything local lives here and is never committed: paths to real vaults and
+# the findings from running against them, scratch scripts, session artefacts,
+# temporary output. If something is tied to one machine or one installation, it
+# belongs in .local/ rather than in the repo.
+.local/
+
+# Secrets, e.g. OBSIDIAN_TASKS_MCP_TOKEN kept in a .env file
+.env
+.env.*
+
+# Obsidian's own state, should docs/ or a fixture vault be opened in Obsidian.
+# The fixtures' plugin settings (data.json) are test data and stay tracked;
+# git cannot re-include a file inside an ignored directory, hence each level.
+**/.obsidian/*
+!**/.obsidian/plugins/
+**/.obsidian/plugins/*
+!**/.obsidian/plugins/obsidian-tasks-plugin/
+**/.obsidian/plugins/obsidian-tasks-plugin/*
+!**/.obsidian/plugins/obsidian-tasks-plugin/data.json
+.trash/
+
+# npm pack output: a bundle containing vendor code
+*.tgz
+
+# OS and editor clutter
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local Claude Code configuration; the skills above it are tracked
+.claude/settings.local.json
+CLAUDE.local.md

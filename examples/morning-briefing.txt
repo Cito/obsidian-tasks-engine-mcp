@@ -1,0 +1,16 @@
+# What can I actually do today?
+#
+# Two different reasons a task is not actionable yet, and both are excluded:
+# `starts before tomorrow` drops anything whose start date is still in the
+# future, and `is not blocked` drops anything that depends (⛔) on another
+# task that is not done. A task with neither passes both.
+
+starts before tomorrow
+(due before tomorrow) OR (scheduled before tomorrow)
+is not blocked
+not done
+show tree
+hide on completion
+path does not include .trash
+sort by urgency
+limit 10

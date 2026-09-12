@@ -1,0 +1,9 @@
+# Hygiene: things that have slipped, and things that never had a date.
+# A boolean combination — the operands go in parentheses, not in quotes.
+
+not done
+(due before today) OR (no due date)
+no scheduled date
+no start date
+sort by created
+limit 25

@@ -1,0 +1,7 @@
+# What got done in the last seven days, one group per file.
+# `group by` produces headings in the Markdown result.
+
+done after 7 days ago
+group by filename
+sort by done reverse
+limit 50
