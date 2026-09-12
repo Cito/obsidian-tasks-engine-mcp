@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/Cito/obsidian-tasks-engine-mcp/security/advisories/new
+    about: Report it privately, not as a public issue.
+  - name: How do I write this query?
+    url: https://publish.obsidian.md/tasks/Queries/About+Queries
+    about: The query language is the Tasks plugin's own and documented there.
