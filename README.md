@@ -1,4 +1,17 @@
-# obsidian-tasks-engine-mcp
+<div align="center">
+
+# Obsidian Tasks Engine MCP
+
+**Your whole task list, one question away —
+answered by the real Obsidian Tasks query engine.**
+
+[![CI](https://github.com/Cito/obsidian-tasks-engine-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/Cito/obsidian-tasks-engine-mcp/actions/workflows/ci.yml)
+[![Obsidian Tasks 8.4.0](https://img.shields.io/badge/Obsidian%20Tasks-8.4.0-7C3AED?logo=obsidian&logoColor=white)](https://github.com/obsidian-tasks-group/obsidian-tasks)
+[![MCP](https://img.shields.io/badge/MCP-stdio%20%7C%20HTTP-111111?logo=modelcontextprotocol&logoColor=white)](https://modelcontextprotocol.io)
+[![Node.js ≥ 22](https://img.shields.io/badge/Node.js-%E2%89%A5%2022-5FA04E?logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![License: MIT](https://img.shields.io/github/license/Cito/obsidian-tasks-engine-mcp)](LICENSE)
+
+</div>
 
 An [MCP](https://modelcontextprotocol.io) server that runs the **real query
 engine of the [Obsidian Tasks](https://publish.obsidian.md/tasks/) plugin**
@@ -50,22 +63,25 @@ contribute, start at **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 > the test suite runs against. The version here is checked by `npm test`, so
 > it cannot quietly fall behind the submodule.
 
-## Status
+## Features
 
-| | |
-|---|---|
-| Query engine included 1:1 | ✅ |
-| CLI for testing | ✅ |
-| MCP server (`query_tasks` / `explain_query` / `tasks_query_syntax`) | ✅ |
-| Transports: stdio and Streamable HTTP (`--http`), both protocol eras | ✅ |
-| Line numbers, list hierarchy, headings | ✅ via the plugin's `FileParser` |
-| Vault settings (global filter, custom statuses) | ✅ |
-| Frontmatter as real YAML | ✅ |
-| Restriction to a subpath (`-scope`) | ✅ |
-| `rootDirs` pinned to `-root` on both transports | ✅ opt out with `--allow-any-root` |
-| Shared secret for `--http` | ✅ optional, `OBSIDIAN_TASKS_MCP_TOKEN` |
-| Comparison with real Obsidian data | ✅ every comparison file (89 today) |
-| Invariant check for arbitrary vaults (`--check`) | ✅ |
+- **The whole query language**, run by the plugin's own `Query` class —
+  boolean combinations, relative dates, recurrence, dependencies, grouping and
+  sorting.
+- **No silently dropped filters.** Every response explains the query as the
+  engine understood it; a line it does not understand is an error, not a
+  smaller result.
+- **Reads the vault the way Obsidian does:** the plugin's `FileParser`, your
+  global filter, global query and custom statuses, frontmatter as real YAML —
+  checked against real Obsidian data from the submodule.
+- **Read-only and bounded.** Nothing is written; nothing outside the configured
+  vault is read; `-scope` restricts the server to part of it.
+- **Two transports:** stdio, or Streamable HTTP on loopback with an optional
+  shared secret.
+- **Three tools:** `query_tasks`, `explain_query` and `tasks_query_syntax`,
+  with the same names and parameters as the Go server it replaces.
+- **A CLI** for running queries and for `--check`, which verifies invariants on
+  any vault of your own, with `--summary` for output that must not quote tasks.
 
 ## What it does not do
 
@@ -499,6 +515,25 @@ Vault with roughly 3000 files and 780 tasks: parsing about 200 ms, query about
 30 ms. Measured against the response time of a language model triggering the
 query, the engine is not a performance factor. Context:
 **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
+
+## Acknowledgements
+
+This server is a thin layer; the substance is other people's work.
+
+- **[Obsidian](https://obsidian.md)**, made by a small independent team founded
+  by Erica Xu and Shida Li, for keeping notes as plain Markdown files in a
+  folder — which is the only reason a vault can be read without the app at all.
+- **[Obsidian Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks)**,
+  created by Martin Schenck and developed and maintained by Clare Macrae and
+  Ilyas Landikov, together with its many contributors. The query engine this
+  server runs is theirs, and so is much more that it relies on: the parser,
+  the documentation that `tasks_query_syntax` is generated from, and the
+  real Obsidian data the comparison tests check against. Their query code is
+  cleanly enough separated from Obsidian to run outside it unmodified — which
+  is what made this project possible in the first place.
+
+If the Tasks plugin is useful to you, consider
+[sponsoring its development](https://github.com/sponsors/claremacrae).
 
 ## Origin
 
