@@ -7,7 +7,7 @@ the embedded plugin.
 ## Setting up
 
 ```bash
-git clone --recurse-submodules <repo> obsidian-tasks-engine-mcp
+git clone --recurse-submodules https://github.com/Cito/obsidian-tasks-engine-mcp.git obsidian-tasks-engine-mcp
 cd obsidian-tasks-engine-mcp
 npm install
 npm test
@@ -64,7 +64,8 @@ npm test                          # static checks, fixtures, invariants, compari
 npm run check -- /path/to/vault   # invariants against a real, large vault
 ```
 
-Pasting that output into a patch or an issue? Use
+Pasting that output into a patch or an
+[issue](https://github.com/Cito/obsidian-tasks-engine-mcp/issues)? Use
 `node dist/cli.js --check --summary /path/to/vault` instead: same check, but
 counts only — no task text, no note names, no quoted lines.
 

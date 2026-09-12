@@ -51,3 +51,22 @@ jobs:
       # data, and failing on upstream's fixtures would say nothing about us.
       - name: The invariants, over docs/
         run: node dist/cli.js --check --summary docs
+
+  # Known advisories in what the bundle ships. Reported, not failing: most
+  # runtime dependencies are there because the engine needs them, at the
+  # versions it needs, so an advisory is a finding to look at — not something
+  # to fix on a deadline by moving a dependency out from under the engine.
+  # A separate job, so it neither runs once per Node version nor becomes one
+  # of the required checks on main.
+  audit:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: npm audit (runtime dependencies)
+        run: npm audit --omit=dev

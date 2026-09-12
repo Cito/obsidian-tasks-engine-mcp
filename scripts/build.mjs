@@ -24,7 +24,7 @@ await build({
     bundle: true,
     platform: 'node',
     format: 'esm',
-    target: 'node20',
+    target: 'node22',
     outdir: resolve(root, 'dist'),
     alias: { obsidian: resolve(root, 'src/obsidian-shim.ts') },
     define: { __VERSION__: JSON.stringify(version) },
