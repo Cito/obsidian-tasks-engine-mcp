@@ -63,6 +63,69 @@ contribute, start at **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 > the test suite runs against. The version here is checked by `npm test`, so
 > it cannot quietly fall behind the submodule.
 
+## An example
+
+> **You:** What do I have to get done this week? Leave out anything I can't
+> start yet or that's still waiting on something else.
+
+The assistant turns that into a Tasks query and calls `query_tasks`:
+
+```
+not done
+(due before in 7 days) OR (scheduled before in 7 days)
+starts before tomorrow
+is not blocked
+group by filename
+sort by priority
+```
+
+The plugin's engine runs it over the vault and the server answers with the
+result, fenced off as data, followed by how every line was understood
+(abridged):
+
+```markdown
+## Matches: 6 of 11 tasks
+
+<vault-content>
+#### [[Conference talk]]
+- [ ] Send abstract to the programme committee 🆔 abstract ⏫ 📅 2026-09-14
+- [ ] Book train to Berlin 📅 2026-09-16
+
+#### [[Garden shed]]
+- [ ] Order timber 🆔 timber 🔼 📅 2026-09-15
+
+#### [[Household]]
+- [ ] Renew passport ⏫ 📅 2026-09-11
+- [ ] Water the plants 🔁 every 3 days 📅 2026-09-13
+- [ ] Call the dentist ⏳ 2026-09-12
+</vault-content>
+
+## Query as it ran
+
+  (due before in 7 days) OR (scheduled before in 7 days) =>
+    OR (At least one of):
+      due before in 7 days =>
+        due date is before 2026-09-19 (Saturday 19th September 2026)
+      scheduled before in 7 days =>
+        scheduled date is before 2026-09-19 (Saturday 19th September 2026)
+
+  starts before tomorrow =>
+    start date is before 2026-09-13 (Sunday 13th September 2026) OR no start date
+
+  is not blocked
+```
+
+> **Assistant:** Six tasks. Start with the passport — it was due yesterday and
+> is high priority. The abstract for your talk is due on Monday, the timber
+> for the shed on Tuesday, and the train to Berlin needs booking by
+> Wednesday. The dentist call is scheduled for today, and the plants need
+> watering tomorrow.
+
+The five tasks left out were not left out by the language model. One is done,
+two depend (⛔) on the abstract and the timber, one does not start until the
+20th, and one has no date at all — the engine decided that, exactly as it
+would in a `tasks` block inside Obsidian.
+
 ## Features
 
 - **The whole query language**, run by the plugin's own `Query` class —
