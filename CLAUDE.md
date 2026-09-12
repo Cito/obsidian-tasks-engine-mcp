@@ -193,8 +193,9 @@ shim needs, how the plugin starts up): skill `obsidian-tasks-engine`,
   time under a mutex; without it, concurrent calls against different vaults
   return plausible, wrong answers.
 - `npm run typecheck` reports type errors in `vendor/` without failing on
-  them: the shim supplies the engine's runtime symbols, not its types. The
-  count is only meaningful as a difference across a submodule bump.
+  them: the shim supplies the engine's runtime symbols and only the few types
+  our own code hands to it. The count is only meaningful as a difference
+  across a submodule bump.
 - `--http` binds to `127.0.0.1` only and requires `-root`, which then becomes a
   boundary for `rootDirs`. Neither is optional: under stdio the client spawned
   us and could read those directories anyway, but a port has no such

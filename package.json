@@ -26,7 +26,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "typecheck": "node scripts/typecheck.mjs",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0",
     "cli": "npm run build && node dist/cli.js",
     "serve": "npm run build && node dist/server.js",
     "test": "npm run typecheck && npm run lint && npm run build && node dist/selftest.js && node dist/conformance.js && node scripts/mcp-smoke.mjs && node scripts/mcp-smoke.mjs --http",
