@@ -16,6 +16,7 @@ import { join } from 'node:path';
 import { FileParser } from '../vendor/obsidian-tasks/src/Obsidian/FileParser';
 import type { Task } from '../vendor/obsidian-tasks/src/Task/Task';
 import { TasksFile } from '../vendor/obsidian-tasks/src/Scripting/TasksFile';
+import type { Logger } from '../vendor/obsidian-tasks/src/lib/logging';
 
 import { parseFileMetadata } from './metadata';
 import { describeProblem, isInside, vaultRelative } from './paths';
@@ -202,7 +203,7 @@ export function readVault(
             try {
                 const content = normalizeLineEndings(readFileSync(file, 'utf8'));
                 const cachedMetadata = parseFileMetadata(content);
-                const tasksFile = new TasksFile(path, cachedMetadata as any);
+                const tasksFile = new TasksFile(path, cachedMetadata);
                 sources?.set(path, content);
 
                 const parser = new FileParser(
@@ -265,15 +266,19 @@ function reportParseError(problems: string[]) {
     };
 }
 
-function loggerFor(path: string, problems: string[]) {
-    return {
+function loggerFor(path: string, problems: string[]): Logger {
+    // FileParser calls only `debug` and `warn`. `Logger` is a class with
+    // private fields, so no object literal satisfies it structurally — the
+    // cast says that, and names the type instead of giving it up.
+    const logger: Pick<Logger, 'debug' | 'warn'> = {
         debug: () => {},
         warn: () =>
             problems.push(
                 `${path}: the parser reported a problem in this file; ` +
                     'its message is not quoted here, because it carries the line itself.',
             ),
-    } as any;
+    };
+    return logger as Logger;
 }
 
 /** 1-based, as an editor counts — or `?` if the cache had no position. */

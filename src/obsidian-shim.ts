@@ -10,6 +10,16 @@
  * scripts/build.mjs.
  */
 
+import type { CachedMetadata } from './metadata';
+
+/*
+ * The types the engine imports from 'obsidian', answered with the shapes
+ * `src/metadata.ts` actually produces. Type-only: nothing reaches the bundle,
+ * but `TasksFile` and `FileParser` are then checked against what we hand them.
+ */
+export type { CachedMetadata, ListItemCache, SectionCache } from './metadata';
+export type FrontMatterCache = NonNullable<CachedMetadata['frontmatter']>;
+
 /** Obsidian shows a popup with this. Outside Obsidian: to stderr. */
 export class Notice {
     constructor(message: string) {
@@ -25,7 +35,7 @@ export class Notice {
  * more. `null` is returned only when there is no cache at all — that is how
  * `TasksFile` tells "no tags" from "nothing was read".
  */
-export function getAllTags(cache: any): string[] | null {
+export function getAllTags(cache: CachedMetadata | null | undefined): string[] | null {
     if (!cache) return null;
 
     const tags: string[] = [];
@@ -55,7 +65,7 @@ export function getAllTags(cache: any): string[] | null {
  * Obsidian does **not** split a string at commas. It is one tag, and a tag
  * containing a comma and a space is invalid and drops out.
  */
-export function parseFrontMatterTags(frontmatter: any): string[] | null {
+export function parseFrontMatterTags(frontmatter: FrontMatterCache | undefined): string[] | null {
     if (!frontmatter) return null;
 
     const raw = frontmatter.tags ?? frontmatter.tag;
@@ -106,7 +116,7 @@ export function prepareSimpleSearch(query: string) {
  * ------------------------------------------------------------------------ */
 
 /** Only used in Cache.ts, to debounce Obsidian events. */
-export function debounce<T extends (...args: any[]) => any>(fn: T): T {
+export function debounce<T extends (...args: never[]) => unknown>(fn: T): T {
     return fn;
 }
 

@@ -10,7 +10,7 @@
 import moment from 'moment';
 import { initializeI18n } from '../vendor/obsidian-tasks/src/i18n/i18n';
 
-const globals = globalThis as any;
+const globals = globalThis as unknown as { window?: { moment?: typeof moment }; moment?: typeof moment };
 globals.window = globals.window ?? {};
 globals.window.moment = moment;
 globals.moment = moment;

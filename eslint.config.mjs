@@ -41,9 +41,10 @@ export default tseslint.config(
             // distinction the rule is there to force.
             '@typescript-eslint/no-floating-promises': 'error',
 
-            // The engine's types are what they are; `any` crossing our own
-            // boundary is worth a warning, not a build failure.
-            '@typescript-eslint/no-explicit-any': 'warn',
+            // The engine's types are loose at its edges, but the shim can
+            // name the shapes it hands over — so `any` in our own code is an
+            // error. Where no type fits, say `unknown` and narrow it.
+            '@typescript-eslint/no-explicit-any': 'error',
 
             // Underscore marks a parameter as knowingly unused.
             '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],

@@ -97,16 +97,19 @@ Two things about the scope are deliberate:
   the check. It is compiled upstream under its own tsconfig against the real
   `obsidian` type definitions; here it is compiled against
   `src/obsidian-shim.ts`, which supplies the runtime symbols the engine needs
-  and not the types. A finding there would be a finding we must not act on.
-  `scripts/typecheck.mjs` therefore counts them and prints the count.
+  and only the few types our own code hands to it. A finding there would be a
+  finding we must not act on. `scripts/typecheck.mjs` therefore counts them
+  and prints the count.
 - **The type-aware lint rules are the point.** `no-floating-promises` above
   all: the engine's singletons are process-wide and `src/engine.ts` serialises
   queries under a mutex, so a promise nobody waits for does not crash here —
   it returns a plausible, wrong answer. The stylistic rules are along for the
   ride.
 
-`no-explicit-any` is a warning, not an error. The `any`s that remain are all
-at the boundary to the vendor tree, each of them deliberate.
+Lint runs with `--max-warnings 0`, and `no-explicit-any` is an error. Where the
+engine's types are loose, the shim names the shape we hand over (it
+re-exports `CachedMetadata` from `src/metadata.ts`), and a value whose type is
+genuinely open is `unknown`, narrowed where it is used.
 
 ## Keeping the submodule current
 
