@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Check out, engine and all
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: recursive
 
@@ -34,7 +34,7 @@ jobs:
       - name: The submodule is actually there
         run: test -f vendor/obsidian-tasks/manifest.json
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
           cache: npm
