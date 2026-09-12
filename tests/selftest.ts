@@ -689,6 +689,17 @@ console.log('\nThe version in the README');
               `containing "**obsidian-tasks ${version}**".`
             : `README.md says ${claimed}, the submodule is at ${version}. Update that line.`,
     );
+
+    // The badge at the top repeats the version, so it is held to the same claim.
+    const badge = /img\.shields\.io\/badge\/Obsidian%20Tasks-(\d+\.\d+\.\d+)-/.exec(readme)?.[1] ?? null;
+    check(
+        `the README badge names the submodule's version (${version})`,
+        badge === version,
+        badge === null
+            ? 'README.md has no Obsidian Tasks version badge — expected ' +
+              `"img.shields.io/badge/Obsidian%20Tasks-${version}-".`
+            : `the README badge says ${badge}, the submodule is at ${version}. Update the badge.`,
+    );
 }
 
 console.log('\nReading without incident');
