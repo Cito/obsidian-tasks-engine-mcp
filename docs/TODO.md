@@ -9,7 +9,6 @@ Priorities, highest to lowest: 🔺 ⏫ 🔼 (nothing) 🔽 ⏬.
 
 ## The project
 
-- [ ] Watch the first real CI run. The workflow is written (`.github/workflows/ci.yml`: a `--recurse-submodules` checkout, `npm test` on Node 22 and 24), but it has never run — there is no remote yet. The submodule is the most common way a fresh clone fails, and it fails for the newcomer rather than for anyone who already has it checked out, so the run itself is the point, not the file #tests ⏫ ➕ 2026-09-12
 - [ ] Decide about npm, if the project is ever well received enough for the question to arise. An MCP server is configured with a command line, and `git clone && npm install && npm run build` obtains one perfectly well, so nothing is waiting on this — but a package is a second distribution channel, and the shape it would take (source, a curated `dist/`, or nothing at all) should be chosen deliberately rather than arrived at. The bundle inlines the engine and would have to carry both copyright notices; that is the part that is an obligation rather than a chore #maintenance ⏬ ➕ 2026-09-12
 
 ## The server

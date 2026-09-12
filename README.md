@@ -171,8 +171,9 @@ allowed that at the command line. It returns tasks and nothing else from the
 files it reads, says its problems in the vault's own terms rather than in
 absolute paths, marks everything that came out of the vault as read data
 rather than as instructions, never evaluates JavaScript from a query unless a
-human turns it on at the command line, and never writes. `-scope` narrows it to part of a vault, `--summary`
-keeps task text out of anything that gets logged. The full risk model — what
+human turns it on at the command line, and never writes. `-scope` narrows it
+to part of a vault, `--summary` keeps task text out of anything that gets
+logged. The full risk model — what
 could go wrong and which code prevents it — is in
 **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** under "Security is a goal of
 the same rank as correctness". Found a way around it? Please report it
@@ -185,7 +186,7 @@ queryable with the server.
 ## Setup
 
 ```bash
-git clone --recurse-submodules <repo> obsidian-tasks-engine-mcp
+git clone --recurse-submodules https://github.com/Cito/obsidian-tasks-engine-mcp.git obsidian-tasks-engine-mcp
 cd obsidian-tasks-engine-mcp
 npm install
 npm run build

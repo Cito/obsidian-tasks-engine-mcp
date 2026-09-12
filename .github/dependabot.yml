@@ -1,0 +1,29 @@
+# Update pull requests for the direct dependencies and the CI actions.
+#
+# Deliberately absent: the `gitsubmodule` ecosystem. `vendor/obsidian-tasks`
+# moves by hand, with a run against a real vault behind it and the README
+# version updated in the same commit — see CONTRIBUTING.md, "Keeping the
+# submodule current". A bot must not touch it.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      dev-dependencies:
+        dependency-type: development
+        update-types: [minor, patch]
+      runtime-dependencies:
+        dependency-type: production
+        update-types: [minor, patch]
+    ignore:
+      # Pinned by the engine: obsidian-tasks requires exactly this version,
+      # and it moves with the submodule, not on its own.
+      - dependency-name: chrono-node
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
