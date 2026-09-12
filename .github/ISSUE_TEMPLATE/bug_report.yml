@@ -1,0 +1,99 @@
+name: Bug report
+description: A query returns something other than Obsidian shows, the server fails, or a check reports a problem.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **This issue is public — keep your vault out of it.** Task lines, note names and paths from a real vault do not belong here. Reproduce the problem with a few made-up notes, or run the check with `--summary`, which prints counts and rule names only.
+
+        Found something that breaks one of the server's security guarantees? Please do not open an issue; report it privately as described in [SECURITY.md](https://github.com/Cito/obsidian-tasks-engine-mcp/blob/main/SECURITY.md).
+
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before you submit
+      options:
+        - label: Nothing below comes from a private vault — no real task lines, note names or paths.
+          required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened, and what did you expect?
+      placeholder: The query returns the task "Buy milk", but it is done and Obsidian does not list it.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where does it happen?
+      options:
+        - MCP server over stdio
+        - MCP server over HTTP (--http)
+        - CLI, running a query
+        - CLI, --check
+        - Build or tests
+    validations:
+      required: true
+
+  - type: textarea
+    id: query
+    attributes:
+      label: The query
+      description: The lines of the query, exactly as passed in `filters` or in the query file.
+      render: text
+
+  - type: dropdown
+    id: obsidian
+    attributes:
+      label: Does Obsidian itself agree?
+      description: The same query in a `tasks` code block inside Obsidian, on the same notes. If Obsidian shows the same result, the behaviour comes from the Tasks plugin rather than from this server.
+      options:
+        - Obsidian shows the result I expected — this server differs
+        - Obsidian shows the same result as this server
+        - Not checked
+        - Not about query results
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes to reproduce it
+      description: The smallest made-up note or notes that show the problem, with their file names. Mention tabs, CRLF line endings or unusual characters if they are involved, since they do not survive copying.
+      render: markdown
+
+  - type: textarea
+    id: check-summary
+    attributes:
+      label: Output of `--check --summary`
+      description: "`node dist/cli.js --check --summary /path/to/vault` — counts only, safe to paste. Especially useful if the problem only shows on your own vault."
+      render: text
+
+  - type: textarea
+    id: settings
+    attributes:
+      label: Tasks plugin settings
+      description: Global filter, global query or custom statuses, if you use any. The server reads them from `.obsidian/plugins/obsidian-tasks-plugin/data.json`.
+
+  - type: input
+    id: commit
+    attributes:
+      label: Version
+      description: Output of `git rev-parse --short HEAD` in your clone.
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Node.js version, operating system, and the MCP client if one is involved.
+      placeholder: Node.js 24.8, Ubuntu 26.04, Claude Desktop
+
+  - type: textarea
+    id: anything-else
+    attributes:
+      label: Anything else
