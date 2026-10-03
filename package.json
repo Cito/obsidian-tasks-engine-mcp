@@ -35,8 +35,8 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
-    "@modelcontextprotocol/client": "^2.0.0",
-    "@modelcontextprotocol/node": "^2.0.0",
+    "@modelcontextprotocol/client": "^2.2.0",
+    "@modelcontextprotocol/node": "^2.1.0",
     "@modelcontextprotocol/server": "^2.0.0",
     "async-mutex": "^0.5.0",
     "boon-js": "^2.0.5",
@@ -49,8 +49,8 @@
     "mustache-validator": "^0.2.0",
     "rrule": "^2.8.1",
     "safe-regex2": "^5.1.1",
-    "yaml": "^2.9.0",
-    "zod": "^4.6.2"
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
