@@ -1,0 +1,8 @@
+# How much open work sits in each folder, with the count in every heading.
+# `show group count` counts the tasks shown, so `limit` lowers it too.
+
+not done
+group by folder
+show group count
+sort by urgency
+limit 100

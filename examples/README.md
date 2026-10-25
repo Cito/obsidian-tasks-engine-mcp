@@ -17,6 +17,8 @@ node dist/cli.js docs examples/todo.txt        # a smoke test on this repo's own
 | `blocked-and-waiting.txt` | dependencies between tasks (`id` / `dependsOn`) |
 | `overdue-and-undated.txt` | a boolean combination, and filtering on missing dates |
 | `by-tag.txt` | grouping by tag |
+| `columns.txt` | a column view (`view columns by`), which Markdown turns into headings |
+| `group-count.txt` | `show group count`: how many tasks each group holds |
 | `scripting.txt` | `filter by function` — needs `--enable-js` |
 | `todo.txt` | open items, hardest first, grouped by heading — can be run on this repository's own `docs/TODO.md` |
 

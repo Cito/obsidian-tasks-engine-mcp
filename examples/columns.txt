@@ -1,0 +1,8 @@
+# A board: open tasks in one column per priority, as Obsidian draws them.
+# Markdown has no columns, so the result has one heading per column instead —
+# exactly what `group by priority` would write.
+
+not done
+view columns by priority
+sort by due
+limit 50
