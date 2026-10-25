@@ -1,6 +1,6 @@
 {
   "name": "obsidian-tasks-engine-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "MCP server that runs the real Obsidian Tasks query engine outside of Obsidian",
   "license": "MIT",
