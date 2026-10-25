@@ -38,7 +38,7 @@ Priorities, highest to lowest: 🔺 ⏫ 🔼 (nothing) 🔽 ⏬.
 Recurring, and all of them are reports rather than automation: nothing here
 moves by itself.
 
-- [ ] Check whether the submodule pin is behind upstream, and whether the version named in the README still matches #maintenance 🔁 every 3 months 📅 2026-12-12
+- [ ] Check whether the submodule pin is behind upstream, and whether the version named in the README still matches #maintenance 🔁 every 3 months 📅 2027-03-12
 - [ ] Check whether the MCP specification has a new revision, and whether the SDK has followed it #maintenance 🔁 every 6 months 📅 2027-03-12
 - [ ] Check whether the oldest supported Node has reached its end of life (Node 22: 2027-04-30). If so, raise the minimum: `engines`, the build target, the CI matrix, the README badge and the major of `@types/node` move together, in one commit #maintenance 🔁 every year 📅 2027-04-30
 
@@ -54,6 +54,7 @@ reasons are in [ARCHITECTURE.md](ARCHITECTURE.md) under "Non-goals".
 
 ## Done
 
+- [x] Check whether the submodule pin is behind upstream, and whether the version named in the README still matches — moved to obsidian-tasks 8.6.0 #maintenance 🔁 every 3 months 📅 2026-12-12 ✅ 2026-10-25
 - [x] Pin `rootDirs` to the `-root` directories on every transport, not only under `--http`, with `--allow-any-root` as the human opt-out #mcp #security ✅ 2026-09-12
 - [x] Say problems in the vault's own terms: relative paths, line numbers instead of lines, `src/paths.ts` as the one place that decides #security #engine 🆔 relative-problems ✅ 2026-09-12
 - [x] Lock that down with a test, where a path is built and not only where one is printed #tests #security ⛔ relative-problems ✅ 2026-09-12
