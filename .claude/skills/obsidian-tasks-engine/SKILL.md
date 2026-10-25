@@ -123,11 +123,11 @@ initialised with `InMemoryLocalStorageProvider`.
 
 ## The treasure: real Obsidian data in the submodule
 
-`vendor/obsidian-tasks/tests/Obsidian/__test_data__/` contains 89 JSON files,
+`vendor/obsidian-tasks/tests/Obsidian/__test_data__/` contains 93 JSON files,
 each with the content of a note **and** the `CachedMetadata` Obsidian itself
 produced, plus Obsidian's results for `getAllTags()` and
 `parseFrontMatterTags()`. That is the basis for checking `src/metadata.ts` —
-`npm run conformance` compares against it (status: 89/89).
+`npm run conformance` compares against it (status: 93/93).
 
 **Before every change to `src/metadata.ts`, look there instead of guessing.**
 Rules that came out of it and that nobody would invent:
@@ -142,6 +142,10 @@ Rules that came out of it and that nobody would invent:
   do, those in `<!-- … -->` do not.
 - `- [ ] 1. Text` creates a second, embedded list item on the same line
   (Obsidian issue 3481).
+- Without a checkbox in front, `* * [ ] Text` or `1. 1. [ ] Text` opens a
+  list on the item's own line, and Obsidian records that list as a **root**,
+  not as a child — its siblings on later lines too (Obsidian issue 4081). The
+  plugin then misses the inner task; that is upstream behaviour, not ours.
 
 The comparison files contain **no tabs** and **no CRLF** — reading has already
 failed on both (CRLF silently yielded zero tasks; `src/vault.ts` normalises

@@ -252,7 +252,9 @@ function readListBlock(
     // reaches at least that item's **content column** — not already when it is
     // merely larger. `- [ ] a` has content column 2; an item indented by one
     // space is therefore a sibling, not a child.
-    const stack: { contentCol: number; quote: number; line: number }[] = [];
+    // `rootsChildren`: the item's child list began on the item's own line, and
+    // Obsidian records the items of such a list as roots (see below).
+    const stack: { contentCol: number; quote: number; line: number; rootsChildren?: boolean }[] = [];
     let index = start;
     let lastItemLine = start;
 
@@ -296,27 +298,50 @@ function readListBlock(
             stack.pop();
         }
 
-        const parent = stack.length > 0 ? stack[stack.length - 1].line : -1 - index;
-        stack.push({ contentCol, quote, line: index });
+        const top = stack.length > 0 ? stack[stack.length - 1] : undefined;
+        const parent = top && !top.rootsChildren ? top.line : -1 - index;
 
         const checkbox = CHECKBOX.exec(rest);
+        const afterCheckbox = checkbox ? rest.slice(checkbox[0].length) : rest;
+        const nested = /^([-*+]|[0-9]+[.)])[ \t]/.exec(afterCheckbox);
+        stack.push({ contentCol, quote, line: index, rootsChildren: nested !== null && checkbox === null });
+
         listItems.push({
             position: span(index, index),
             parent,
             ...(checkbox ? { task: checkbox[1] } : {}),
         });
 
-        // Obsidian quirk (issue 3481): if the text after the checkbox itself
-        // starts with a list marker, a second, embedded list item appears on
-        // the same line.
-        const afterCheckbox = checkbox ? rest.slice(checkbox[0].length) : rest;
-        const nested = /^([-*+]|[0-9]+[.)])[ \t]/.exec(afterCheckbox);
         if (nested) {
             const column = line.length - afterCheckbox.length;
-            listItems.push({
-                position: { start: at(index, column), end: at(index, line.length) },
-                parent: index,
-            });
+            if (checkbox) {
+                // Obsidian quirk (issue 3481): if the text after the checkbox
+                // itself starts with a list marker, a second, embedded list
+                // item appears on the same line, as a child.
+                listItems.push({
+                    position: { start: at(index, column), end: at(index, line.length) },
+                    parent: index,
+                });
+            } else {
+                // Obsidian quirk (issue 4081): without a checkbox in front,
+                // `* * [ ] a` or `1. 1. [ ] a` opens a list on the item's own
+                // line — and Obsidian records that list as a root, not as a
+                // child. The inner item is the task, and any sibling that
+                // follows it is a root as well; only a deeper child points
+                // back to this line again.
+                const innerRest = afterCheckbox.slice(nested[1].length).replace(/^[ \t]+/, '');
+                const innerCheckbox = CHECKBOX.exec(innerRest);
+                stack.push({
+                    contentCol: indentWidth(line.slice(0, line.length - innerRest.length)),
+                    quote,
+                    line: index,
+                });
+                listItems.push({
+                    position: { start: at(index, column), end: at(index, line.length) },
+                    parent: -1 - index,
+                    ...(innerCheckbox ? { task: innerCheckbox[1] } : {}),
+                });
+            }
         }
 
         collectTags(line, index, at, tags);
