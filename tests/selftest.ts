@@ -109,6 +109,24 @@ console.log('\nList tree');
     check('without show tree the list stays flat', !/\n {4}- /.test(flat.markdown), flat.markdown);
 }
 
+console.log('\nColumn views and group counts');
+{
+    // Markdown has no columns. What survives of `view columns by` is the
+    // grouping — the same headings `group by` writes, and nothing lost.
+    const columns = await ask('not done\nview columns by filename');
+    const groups = await ask('not done\ngroup by filename');
+    check(
+        'a column view comes out as the grouping it is built on',
+        columns.markdown === groups.markdown && /^#### /m.test(columns.markdown),
+        columns.markdown.slice(0, 400),
+    );
+
+    const counted = await ask('path includes Tree\nnot done\ngroup by filename\nshow group count');
+    check('show group count adds the count to the heading', /^#### .+ \(\d+ tasks?\)$/m.test(counted.markdown), counted.markdown);
+    const uncounted = await ask('path includes Tree\nnot done\ngroup by filename');
+    check('without it the heading has none', !/\(\d+ tasks?\)/.test(uncounted.markdown), uncounted.markdown);
+}
+
 console.log('\nTab indentation');
 {
     // Regression: indentation was measured in columns (tab = 4), the content
