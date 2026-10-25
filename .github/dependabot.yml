@@ -5,10 +5,12 @@
 # version updated in the same commit — see CONTRIBUTING.md, "Keeping the
 # submodule current". A bot must not touch it.
 #
-# Both ecosystems wait two weeks after a release before proposing it: a
+# Both ecosystems wait a week after a release before proposing it: a
 # compromised or broken release is usually found and pulled within days, and
-# a version nobody else has run yet is not one to run first. Security updates
-# are exempt — Dependabot applies `cooldown` to version updates only.
+# a version nobody else has run yet is not one to run first. An advisory
+# overrides the wait; it arrives as an alert and is acted on by hand, since
+# automatic security updates are off — they would move the engine's
+# dependencies past the submodule.
 version: 2
 updates:
   - package-ecosystem: npm
@@ -16,7 +18,7 @@ updates:
     schedule:
       interval: weekly
     cooldown:
-      default-days: 14
+      default-days: 7
     open-pull-requests-limit: 5
     groups:
       dev-dependencies:
@@ -61,4 +63,4 @@ updates:
     schedule:
       interval: monthly
     cooldown:
-      default-days: 14
+      default-days: 7
