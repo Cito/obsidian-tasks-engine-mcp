@@ -43,6 +43,12 @@ updates:
       - dependency-name: typescript
         update-types: ['version-update:semver-major']
 
+      # The major of the Node types is the Node version they describe, and
+      # it follows `engines`: newer types would accept APIs the oldest
+      # supported Node does not have. Both move together, by hand.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+
   - package-ecosystem: github-actions
     directory: /
     schedule:

@@ -24,7 +24,6 @@
         // The same alias the build applies: everything the engine imports from
         // 'obsidian' comes from the shim. Without this the checker resolves
         // nothing and every vendor import is an error.
-        "baseUrl": ".",
         "paths": {
             "obsidian": ["./src/obsidian-shim.ts"]
         }
