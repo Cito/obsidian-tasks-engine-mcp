@@ -4,12 +4,19 @@
 # moves by hand, with a run against a real vault behind it and the README
 # version updated in the same commit — see CONTRIBUTING.md, "Keeping the
 # submodule current". A bot must not touch it.
+#
+# Both ecosystems wait two weeks after a release before proposing it: a
+# compromised or broken release is usually found and pulled within days, and
+# a version nobody else has run yet is not one to run first. Security updates
+# are exempt — Dependabot applies `cooldown` to version updates only.
 version: 2
 updates:
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 14
     open-pull-requests-limit: 5
     groups:
       dev-dependencies:
@@ -43,7 +50,15 @@ updates:
       - dependency-name: typescript
         update-types: ['version-update:semver-major']
 
+      # The major of the Node types is the Node version they describe, and
+      # it follows `engines`: newer types would accept APIs the oldest
+      # supported Node does not have. Both move together, by hand.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 14

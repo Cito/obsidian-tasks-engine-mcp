@@ -35,11 +35,12 @@ Priorities, highest to lowest: 🔺 ⏫ 🔼 (nothing) 🔽 ⏬.
 
 ## Standing duties
 
-Recurring, and both are reports rather than automation: nothing here moves by
-itself.
+Recurring, and all of them are reports rather than automation: nothing here
+moves by itself.
 
 - [ ] Check whether the submodule pin is behind upstream, and whether the version named in the README still matches #maintenance 🔁 every 3 months 📅 2026-12-12
 - [ ] Check whether the MCP specification has a new revision, and whether the SDK has followed it #maintenance 🔁 every 6 months 📅 2027-03-12
+- [ ] Check whether the oldest supported Node has reached its end of life (Node 22: 2027-04-30). If so, raise the minimum: `engines`, the build target, the CI matrix, the README badge and the major of `@types/node` move together, in one commit #maintenance 🔁 every year 📅 2027-04-30
 
 ## Decided against
 
