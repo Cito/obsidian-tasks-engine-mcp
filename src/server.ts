@@ -120,7 +120,12 @@ if (httpPort === undefined) {
         process.exit(2);
     }
 
-    const handler = toNodeHandler(createMcpHandler(() => createServer(config), { legacy: 'stateless' }));
+    // The SDK's own body limit is the same number, as a second layer under
+    // `withinSizeLimit`: that one believes `Content-Length`, this one counts
+    // what it reads. Its default is four times as large.
+    const handler = toNodeHandler(
+        createMcpHandler(() => createServer(config), { legacy: 'stateless', maxRequestBodySize: maxBodyBytes }),
+    );
     const validateHost = localhostHostValidation();
     const validateOrigin = localhostOriginValidation();
 

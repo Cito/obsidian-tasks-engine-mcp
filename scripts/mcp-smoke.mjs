@@ -194,6 +194,23 @@ async function checkTools(client, era) {
     const syntax = await client.callTool({ name: 'tasks_query_syntax', arguments: {} });
     const topics = text(syntax).split('\n## ').length - 1;
     check('tasks_query_syntax returns the reference', topics > 5, `${topics} topic blocks`);
+
+    // Bounds on the arguments themselves. Every entry is the configured root,
+    // so only the bound can be what refuses them. The SDK answers the first
+    // with a protocol error, zod the second with an error result.
+    const refusal = (args) =>
+        client.callTool({ name: 'query_tasks', arguments: args }).then(
+            (response) => (response.isError === true ? text(response) : null),
+            (error) => String(error.message),
+        );
+    const flooded = await refusal({ rootDirs: Array(5_000).fill(vault), filters: 'not done' });
+    check(
+        'a flood of arguments is refused before validation',
+        flooded?.includes('more than the maximum') ?? false,
+        flooded ?? 'accepted',
+    );
+    const tooMany = await refusal({ rootDirs: Array(101).fill(vault), filters: 'not done' });
+    check('more rootDirs than the schema allows are refused', tooMany !== null, tooMany ?? 'accepted');
 }
 
 /**

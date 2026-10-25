@@ -28,6 +28,19 @@ import type { AppliedSettings } from './settings';
 /** Replaced by esbuild with the version from `package.json`. */
 declare const __VERSION__: string;
 
+/**
+ * Bounds on a tool call's arguments, checked before they are validated.
+ *
+ * One request body holds a JSON array of a few hundred thousand wrong-typed
+ * elements, and validating it element by element costs memory in proportion —
+ * the SDK and zod each had an advisory for exactly that. No real call names
+ * more than a handful of vaults. The element limit is that bound plus room for
+ * the named arguments; the SDK counts it before zod sees anything, and the
+ * `.max()` on the schema stops zod at the length rather than after it.
+ */
+const maxRootDirs = 100;
+const maxToolInputElements = maxRootDirs + 10;
+
 export interface ServerConfig {
     /** Vault directories from the command line. */
     roots: string[];
@@ -67,6 +80,7 @@ export function createServer(config: ServerConfig): McpServer {
                 'tree view. Every response names the lines that were not understood and explains ' +
                 'what the query actually does.\n' +
                 'Query language reference: https://publish.obsidian.md/tasks/Queries/About+Queries',
+            maxToolInputElements,
         },
     );
 
@@ -101,6 +115,7 @@ export function createServer(config: ServerConfig): McpServer {
             inputSchema: z.object({
                 rootDirs: z
                     .array(z.string())
+                    .max(maxRootDirs)
                     .optional()
                     .describe(describeRootDirs(config)),
                 filters: z
@@ -161,6 +176,7 @@ export function createServer(config: ServerConfig): McpServer {
             inputSchema: z.object({
                 rootDirs: z
                     .array(z.string())
+                    .max(maxRootDirs)
                     .optional()
                     .describe('Vault whose settings should apply. The vault itself is not read.'),
                 filters: z
