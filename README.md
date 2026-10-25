@@ -6,7 +6,7 @@
 answered by the real Obsidian Tasks query engine.**
 
 [![CI](https://github.com/Cito/obsidian-tasks-engine-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/Cito/obsidian-tasks-engine-mcp/actions/workflows/ci.yml)
-[![Obsidian Tasks 8.4.0](https://img.shields.io/badge/Obsidian%20Tasks-8.4.0-7C3AED?logo=obsidian&logoColor=white)](https://github.com/obsidian-tasks-group/obsidian-tasks)
+[![Obsidian Tasks 8.6.0](https://img.shields.io/badge/Obsidian%20Tasks-8.6.0-7C3AED?logo=obsidian&logoColor=white)](https://github.com/obsidian-tasks-group/obsidian-tasks)
 [![MCP](https://img.shields.io/badge/MCP-stdio%20%7C%20HTTP-111111?logo=modelcontextprotocol&logoColor=white)](https://modelcontextprotocol.io)
 [![Node.js ≥ 22](https://img.shields.io/badge/Node.js-%E2%89%A5%2022-5FA04E?logo=nodedotjs&logoColor=white)](https://nodejs.org)
 [![License: MIT](https://img.shields.io/github/license/Cito/obsidian-tasks-engine-mcp)](LICENSE)
@@ -58,7 +58,7 @@ How that works is described below under "How it works"; why it is built this
 way, in **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**. If you want to
 contribute, start at **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
-> Built and tested against **obsidian-tasks 8.4.0**. The submodule is pinned
+> Built and tested against **obsidian-tasks 8.6.0**. The submodule is pinned
 > to an exact commit — `git submodule status` names it — and that pin is what
 > the test suite runs against. The version here is checked by `npm test`, so
 > it cannot quietly fall behind the submodule.
@@ -567,7 +567,7 @@ Four layers: static checks (`tsc --noEmit` and ESLint over `src/`, `tests/`
 and `scripts/`), which need neither a run nor a vault; a self-check against a
 test vault with hand-written expectations; invariants that need no expected
 result and therefore run on any vault; and the comparison of `src/metadata.ts`
-with **real Obsidian data** from the submodule (89 notes at the time of
+with **real Obsidian data** from the submodule (93 notes at the time of
 writing, each with the `CachedMetadata` Obsidian itself produced). Details:
 **[docs/TESTS.md](docs/TESTS.md)**.
 

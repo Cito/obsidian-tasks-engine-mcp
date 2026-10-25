@@ -54,7 +54,7 @@ What is checked, therefore, is only what this project contributes:
 ## The comparison with Obsidian
 
 This is the most important check. Under
-`vendor/obsidian-tasks/tests/Obsidian/__test_data__/` are 89 JSON files (that
+`vendor/obsidian-tasks/tests/Obsidian/__test_data__/` are 93 JSON files (that
 count is upstream's and grows with the submodule), each
 holding the content of a note **and** the `CachedMetadata` Obsidian itself
 produced for it — plus Obsidian's results for `getAllTags()` and
@@ -66,7 +66,7 @@ are list items, which character sits in the checkbox, who is whose parent, and
 the headings. Columns and byte offsets are not compared — they are evaluated
 nowhere.
 
-**Status: all of them — 89 of 89 at the time of writing.**
+**Status: all of them — 93 of 93 at the time of writing.**
 
 The comparison brought several rules to light that nobody would invent:
 
@@ -82,6 +82,12 @@ The comparison brought several rules to light that nobody would invent:
 - If the text after the checkbox itself starts with a list marker
   (`- [ ] 1. Text`), a second, embedded list item appears on the same line
   (Obsidian issue 3481).
+- Without a checkbox in front, the same thing goes the other way:
+  `* * [ ] Text` or `1. 1. [ ] Text` opens a list on the item's own line, and
+  Obsidian records that list as a root rather than as a child — siblings on
+  the following lines included (Obsidian issue 4081). The plugin then misses
+  the inner task, in Obsidian as here; upstream's `FileParser.test.ts` counts
+  exactly that.
 
 ## The invariants
 

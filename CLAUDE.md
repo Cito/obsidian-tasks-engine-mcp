@@ -119,7 +119,7 @@ npm run build     # esbuild -> dist/cli.js, dist/server.js, dist/selftest.js …
 npm run typecheck # tsc --noEmit over src/ and tests/ (vendor: reported, not enforced)
 npm run lint      # eslint over src/, tests/, scripts/ — never vendor/
 npm test          # typecheck + lint + self-check + invariants + Obsidian comparison
-                  # (89/89) + MCP smoke
+                  # (93/93) + MCP smoke
 npm run check -- <vault>                   # only the invariants, against a real vault
 node dist/cli.js --check --summary <vault>  # same, but counts only — no task text
 node dist/cli.js <vault> examples/morning-briefing.txt
