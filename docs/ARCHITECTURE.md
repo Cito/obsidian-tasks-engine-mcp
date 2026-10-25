@@ -248,10 +248,14 @@ as code, and the one place that does is off by default.
 - **The port costs something to talk to.** A body over 1 MB is refused with
   `413` and one that never says how long it is with `411`, before a byte is
   read; `requestTimeout` and `headersTimeout` drop a client that opens a
-  connection and dribbles. None of this bounds a *query*: every query runs
-  under one process-wide mutex, so an expensive one delays every later caller,
-  and both the time budget and the admission control that answers it are still
-  open — see [TODO.md](TODO.md).
+  connection and dribbles. A tool call's arguments are bounded as well, on
+  every transport: at most 100 entries in `rootDirs` and 110 array elements
+  and object members altogether, counted before anything is validated —
+  validating a flood of them one by one is what exhausted memory in the SDK
+  and zod advisories this answers. None of this bounds a *query*: every
+  query runs under one process-wide mutex, so an expensive one delays every
+  later caller, and both the time budget and the admission control that
+  answers it are still open — see [TODO.md](TODO.md).
 - **Dependencies are part of the surface.** The vendor tree runs in this
   process, unmodified and pinned to a commit. That is why the pin never moves
   by itself and is never patched locally: an update is a decision with a date
