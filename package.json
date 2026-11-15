@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
-    "@modelcontextprotocol/node": "^2.1.1",
+    "@modelcontextprotocol/node": "^2.1.2",
     "@modelcontextprotocol/server": "^2.3.1",
     "async-mutex": "^0.5.0",
     "boon-js": "^2.0.5",
